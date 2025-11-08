@@ -1,0 +1,24 @@
+@AlertVault_HostAddress = http://localhost:5038
+
+GET {{AlertVault_HostAddress}}/api/alert/all
+Accept: application/json
+
+###
+
+POST {{AlertVault_HostAddress}}/api/alert
+Content-Type: application/json
+
+{
+  "Interval": "0.00:05:00.0000"
+}
+
+###
+
+GET {{AlertVault_HostAddress}}/api/alert/14ffaf66-2730-4958-86b1-32153c97b1f8
+Accept: application/json
+
+###
+
+GET {{AlertVault_HostAddress}}/14ffaf66-2730-4958-86b1-32153c97b1f8
+
+###

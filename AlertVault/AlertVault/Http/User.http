@@ -1,0 +1,17 @@
+@AlertVault_HostAddress = http://localhost:5038
+
+GET {{AlertVault_HostAddress}}/api/user/all
+Accept: application/json
+
+###
+
+POST {{AlertVault_HostAddress}}/api/user
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "password"
+}
+
+###
+

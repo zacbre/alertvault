@@ -1,0 +1,6 @@
+﻿services:
+  alertvault:
+    image: alertvault
+    build:
+      context: .
+      dockerfile: AlertVault/Dockerfile

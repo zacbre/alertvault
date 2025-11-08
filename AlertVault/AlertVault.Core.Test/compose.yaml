@@ -1,0 +1,35 @@
+services:
+  test-migration:
+    image: clientcommand/migration
+    depends_on:
+      - test-db
+    links:
+      - test-db
+    volumes:
+      # Make the migration files accessible inside the container
+      - ./../../migrations:/app/db
+    environment:
+      - "Engine=Postgres"
+      - "Host=test-db"
+      - "User=user"
+      - "Port=5432"
+      - "Password=password"
+      - "Database=alertvault"
+      - "Schema=public"
+      - "RunInitScripts=true"
+      - "MaintenanceDatabase=postgres"
+  test-db:
+    image: postgres:latest
+    ports:
+      - "5402:5432"
+    environment:
+      POSTGRES_ROOT_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DATABASE: alertvault
+    volumes:
+      - test-postgres:/var/lib/postgresql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  test-postgres:
