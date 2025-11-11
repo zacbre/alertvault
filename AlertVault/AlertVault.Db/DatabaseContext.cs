@@ -10,16 +10,41 @@ public class DatabaseContext : DbContext
         : base(options)
     {
     }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    
+    private void UpdateEntity()
     {
-        // modelBuilder.Entity<Alert>()
-        //     .HasOne(e => e.User)
-        //     .WithMany(e => e.Alerts)
-        //     .HasForeignKey(e => e.UserId)
-        //     .HasPrincipalKey(e => e.Id);
+        var entries = ChangeTracker.Entries()
+            .Where(e => e is { Entity: BaseEntity, State: EntityState.Modified or EntityState.Added });
+
+        foreach (var entry in entries)
+        {
+            ((BaseEntity)entry.Entity).UpdatedUtc = DateTime.UtcNow;
+        }
     }
 
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        UpdateEntity();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+    {
+        UpdateEntity();
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    public override int SaveChanges()
+    {
+        UpdateEntity();
+        return base.SaveChanges();
+    }
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        UpdateEntity();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
 
     public DbSet<Alert> Alert { get; init; }
     public DbSet<User> User { get; init; }

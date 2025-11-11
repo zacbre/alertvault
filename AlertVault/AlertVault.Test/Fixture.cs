@@ -63,7 +63,6 @@ public class Fixture : IDisposable
     public void Dispose()
     {
         _context.Dispose();
-        DropTestDatabase();
     }
 
     private void DropTestDatabase()
