@@ -1,9 +1,9 @@
-using AlertVault.Core;
 using AlertVault.Core.Entities;
+using AlertVault.Core.Infrastructure.Database;
 using AlertVault.Core.Service;
-using AlertVault.Core.Test;
 using AlertVault.Core.Validators;
-using AlertVault.Db;
+
+namespace AlertVault.Core.Test;
 
 public class BaseTest(Fixture fixture)
 {

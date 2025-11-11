@@ -1,11 +1,11 @@
-using AlertVault.Core.Dto;
 using AlertVault.Core.Entities;
-using AlertVault.Core.Repository;
+using AlertVault.Core.Entities.Dto;
+using AlertVault.Core.Infrastructure.Database;
 using FluentValidation;
 
 namespace AlertVault.Core.Service;
 
-public class AlertService(IAlertRepository alertRepository, IAlertNotificationQueueRepository alertNotificationQueueRepository, IValidator<Alert> validator)
+public class AlertService(AlertRepository alertRepository, AlertNotificationQueueRepository alertNotificationQueueRepository, IValidator<Alert> validator)
 {
     public async Task<List<Alert>> All() => await alertRepository.All();
     

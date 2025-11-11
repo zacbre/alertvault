@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlertVault.Db;
 
-public class UserRepository(DatabaseContext context) : IUserRepository
+public class UserRepository(DatabaseContext context) : BaseRepository(context)
 {
     public async Task<List<User>> All() => await context.User.Include(p => p.Alerts).ToListAsync();
 
@@ -26,7 +26,7 @@ public class UserRepository(DatabaseContext context) : IUserRepository
     public async Task Add(User user)
     {
         var addedUser = await context.User.AddAsync(user);
-        await context.SaveChangesAsync();
+        await Save();
         user.Id = addedUser.Entity.Id;
     }
 }

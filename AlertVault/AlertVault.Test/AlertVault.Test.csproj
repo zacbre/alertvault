@@ -35,7 +35,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AlertVault.Core\AlertVault.Core.csproj" />
-      <ProjectReference Include="..\AlertVault.Db\AlertVault.Db.csproj" />
       <ProjectReference Include="..\AlertVault\AlertVault.csproj" />
     </ItemGroup>
 

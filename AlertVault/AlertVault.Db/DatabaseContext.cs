@@ -1,5 +1,6 @@
 using AlertVault.Core;
 using AlertVault.Core.Entities;
+using AlertVault.Core.Entities.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlertVault.Db;
@@ -9,6 +10,16 @@ public class DatabaseContext : DbContext
     public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .Entity<UserCredentials>()
+            .Property(e => e.CredentialType)
+            .HasConversion(
+                v => v.ToString(),
+                v => (UserCredentialTypeEnum)Enum.Parse(typeof(UserCredentialTypeEnum), v));
     }
     
     private void UpdateEntity()
@@ -48,7 +59,7 @@ public class DatabaseContext : DbContext
 
     public DbSet<Alert> Alert { get; init; }
     public DbSet<AlertNotification> AlertNotifications { get; init; }
-    public DbSet<User> User { get; init; }
-
     public DbSet<Request> Request { get; init; }
+    public DbSet<UserCredentials> UserCredentials { get; init; } 
+    public DbSet<User> User { get; init; }
 }

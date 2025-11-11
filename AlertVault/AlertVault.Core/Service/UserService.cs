@@ -1,9 +1,9 @@
 using AlertVault.Core.Entities;
-using AlertVault.Core.Repository;
+using AlertVault.Core.Infrastructure.Database;
 
 namespace AlertVault.Core.Service;
 
-public class UserService(IUserRepository userRepository)
+public class UserService(UserRepository userRepository)
 {
     public async Task<List<User>> All() => await userRepository.All();
     public async Task<User?> Get(string email) => await userRepository.Get(email);

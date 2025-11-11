@@ -1324,29 +1324,15 @@
           "CustomEnvironmentConfig": "8.0.1",
           "FluentValidation.AspNetCore": "11.3.1",
           "FluentValidation.DependencyInjectionExtensions": "12.1.0",
-          "Hangfire": "1.8.22"
-        },
-        "compile": {
-          "bin/placeholder/AlertVault.Core.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/AlertVault.Core.dll": {}
-        }
-      },
-      "AlertVault.Db/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v9.0",
-        "dependencies": {
-          "AlertVault.Core": "1.0.0",
-          "CustomEnvironmentConfig": "8.0.1",
+          "Hangfire": "1.8.22",
           "Microsoft.EntityFrameworkCore": "9.0.10",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4"
         },
         "compile": {
-          "bin/placeholder/AlertVault.Db.dll": {}
+          "bin/placeholder/AlertVault.Core.dll": {}
         },
         "runtime": {
-          "bin/placeholder/AlertVault.Db.dll": {}
+          "bin/placeholder/AlertVault.Core.dll": {}
         }
       }
     }
@@ -3698,17 +3684,11 @@
       "type": "project",
       "path": "../AlertVault.Core/AlertVault.Core.csproj",
       "msbuildProject": "../AlertVault.Core/AlertVault.Core.csproj"
-    },
-    "AlertVault.Db/1.0.0": {
-      "type": "project",
-      "path": "../AlertVault.Db/AlertVault.Db.csproj",
-      "msbuildProject": "../AlertVault.Db/AlertVault.Db.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net9.0": [
       "AlertVault.Core >= 1.0.0",
-      "AlertVault.Db >= 1.0.0",
       "CustomEnvironmentConfig >= 8.0.1",
       "Hangfire.AspNetCore >= 1.8.22",
       "Hangfire.Redis.StackExchange >= 1.12.0",
@@ -3744,9 +3724,6 @@
           "projectReferences": {
             "/Users/zac/gh/alertvault/AlertVault/AlertVault.Core/AlertVault.Core.csproj": {
               "projectPath": "/Users/zac/gh/alertvault/AlertVault/AlertVault.Core/AlertVault.Core.csproj"
-            },
-            "/Users/zac/gh/alertvault/AlertVault/AlertVault.Db/AlertVault.Db.csproj": {
-              "projectPath": "/Users/zac/gh/alertvault/AlertVault/AlertVault.Db/AlertVault.Db.csproj"
             }
           }
         }

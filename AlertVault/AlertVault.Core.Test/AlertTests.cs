@@ -1,5 +1,3 @@
-using AlertVault.Core.Service;
-
 namespace AlertVault.Core.Test;
 
 [Collection("Database")]

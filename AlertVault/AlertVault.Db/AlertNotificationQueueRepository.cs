@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlertVault.Db;
 
-public class AlertNotificationQueueRepository(DatabaseContext context) : BaseRepository(context), IAlertNotificationQueueRepository
+public class AlertNotificationQueueRepository(DatabaseContext context) : BaseRepository(context)
 {
     public async Task<AlertNotification?> Next()
     {

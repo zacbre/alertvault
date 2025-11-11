@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc.Testing;
-
 namespace AlertVault.Test;
 
 [Collection("Database")]

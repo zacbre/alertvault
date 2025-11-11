@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlertVault.Db;
 
-public class AlertRepository(DatabaseContext context) : BaseRepository(context), IAlertRepository
+public class AlertRepository(DatabaseContext context) : BaseRepository(context)
 {
     public async Task<List<Alert>> All() => await context.Alert.ToListAsync();
 

@@ -1,9 +1,9 @@
 using AlertVault.Core.Entities;
-using AlertVault.Core.Repository;
+using AlertVault.Core.Infrastructure.Database;
 
 namespace AlertVault.Core.Service;
 
-public class AlertNotificationQueueService(IAlertNotificationQueueRepository alertNotificationQueueRepository)
+public class AlertNotificationQueueService(AlertNotificationQueueRepository alertNotificationQueueRepository)
 {
     public Task Push(AlertNotification alertNotification)
     {

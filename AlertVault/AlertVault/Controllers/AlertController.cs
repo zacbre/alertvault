@@ -1,4 +1,3 @@
-using AlertVault.Core;
 using AlertVault.Core.Service;
 using AlertVault.Models;
 using Microsoft.AspNetCore.Mvc;

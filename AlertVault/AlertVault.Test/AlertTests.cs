@@ -1,5 +1,4 @@
 using System.Net.Http.Json;
-using AlertVault.Core.Dto;
 using AlertVault.Core.Entities;
 using AlertVault.Models;
 

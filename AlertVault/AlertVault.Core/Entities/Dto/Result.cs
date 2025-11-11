@@ -1,4 +1,4 @@
-namespace AlertVault.Core.Dto;
+namespace AlertVault.Core.Entities.Dto;
 
 // Create a Result class
 public class Result

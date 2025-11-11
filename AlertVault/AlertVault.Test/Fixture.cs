@@ -1,5 +1,5 @@
 using AlertVault.Core.Configuration;
-using AlertVault.Db;
+using AlertVault.Core.Infrastructure.Database;
 using CliWrap;
 using CustomEnvironmentConfig;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +37,7 @@ public class Fixture : IDisposable
         CreateTestDatabase();
         
         var options = new DbContextOptionsBuilder<DatabaseContext>()
-            .UseNpgsql(_testConnectionString, b => b.MigrationsAssembly("AlertVault.Db"))
+            .UseNpgsql(_testConnectionString, b => b.MigrationsAssembly("AlertVault.Core"))
             .Options;
             
         var context = new DatabaseContext(options);

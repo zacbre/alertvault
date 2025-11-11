@@ -1,4 +1,4 @@
-using AlertVault.Core.Dto;
+using AlertVault.Core.Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

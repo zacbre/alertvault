@@ -1,8 +1,5 @@
-using AlertVault.Core;
 using AlertVault.Core.Entities;
-using AlertVault.Core.Repository;
 using AlertVault.Core.Service;
-using AlertVault.Db;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlertVault.Controllers;

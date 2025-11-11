@@ -1,5 +1,5 @@
 using System.Net;
-using AlertVault.Core.Dto;
+using AlertVault.Core.Entities.Dto;
 
 namespace AlertVault.Core.Entities;
 

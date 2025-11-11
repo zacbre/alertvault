@@ -1245,7 +1245,9 @@
           "CustomEnvironmentConfig": "8.0.1",
           "FluentValidation.AspNetCore": "11.3.1",
           "FluentValidation.DependencyInjectionExtensions": "12.1.0",
-          "Hangfire": "1.8.22"
+          "Hangfire": "1.8.22",
+          "Microsoft.EntityFrameworkCore": "9.0.10",
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4"
         },
         "compile": {
           "bin/placeholder/AlertVault.Core.dll": {}

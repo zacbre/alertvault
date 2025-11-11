@@ -1,11 +1,9 @@
-using System.Runtime.InteropServices.ComTypes;
 using System.Text.Json.Serialization;
 using AlertVault.Core.Configuration;
+using AlertVault.Core.Infrastructure.Database;
 using AlertVault.Core.Jobs;
-using AlertVault.Core.Repository;
 using AlertVault.Core.Service;
 using AlertVault.Core.Validators;
-using AlertVault.Db;
 using AlertVault.Filters;
 using CustomEnvironmentConfig;
 using FluentValidation;
@@ -18,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = ConfigurationParser.Parse<Configuration>(fileName: "local.env");
 
-Redis = ConnectionMultiplexer.Connect(config.Redis.ToString());
+AlertVault.Program.Redis = ConnectionMultiplexer.Connect(config.Redis.ToString());
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
@@ -50,9 +48,9 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseNpgsql(config.Postgres.ToString()));
 
 // repositories
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IAlertRepository, AlertRepository>();
-builder.Services.AddScoped<IAlertNotificationQueueRepository, AlertNotificationQueueRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<AlertRepository>();
+builder.Services.AddScoped<AlertNotificationQueueRepository>();
 
 // serivces
 builder.Services.AddTransient<UserService>();
@@ -67,7 +65,7 @@ builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
     .UseSimpleAssemblyNameTypeSerializer()
     .UseRecommendedSerializerSettings()
-    .UseRedisStorage(Redis));
+    .UseRedisStorage(AlertVault.Program.Redis));
 
 builder.Services.AddHangfireServer();
 
@@ -101,7 +99,10 @@ RecurringJob.AddOrUpdate<NotifyExpiredAlertJob>(
 
 app.Run();
 
-public partial class Program
+namespace AlertVault
 {
-    public static ConnectionMultiplexer? Redis;
+    public partial class Program
+    {
+        public static ConnectionMultiplexer? Redis;
+    }
 }

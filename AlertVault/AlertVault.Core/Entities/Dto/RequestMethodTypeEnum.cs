@@ -1,4 +1,4 @@
-namespace AlertVault.Core.Dto;
+namespace AlertVault.Core.Entities.Dto;
 
 public enum RequestMethodTypeEnum
 {

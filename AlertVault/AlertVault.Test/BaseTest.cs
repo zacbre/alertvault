@@ -1,9 +1,7 @@
-using AlertVault.Core;
 using AlertVault.Core.Entities;
+using AlertVault.Core.Infrastructure.Database;
 using AlertVault.Core.Service;
 using AlertVault.Core.Validators;
-using AlertVault.Db;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace AlertVault.Test;
 
