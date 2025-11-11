@@ -14,7 +14,7 @@ public class AlertController(AlertService alertService) : ControllerBase
     {
         return Ok(await alertService.All());
     }
-    
+
     [HttpGet("{uuid:guid}")]
     public async Task<IActionResult> Get(Guid uuid)
     {
@@ -23,16 +23,30 @@ public class AlertController(AlertService alertService) : ControllerBase
         {
             return NotFound();
         }
-        
+
         return Ok(alert);
     }
-    
+
     [HttpGet("{uuid:guid}/requests")]
     public async Task<IActionResult> GetRequests(Guid uuid)
     {
         return Ok(await alertService.GetRequests(uuid));
     }
-    
+
+    [HttpDelete("{uuid:guid}")]
+    public async Task<IActionResult> Delete(Guid uuid)
+    {
+        var alert = await alertService.Get(uuid);
+        if (alert is null)
+        {
+            return NotFound();
+        }
+
+        alertService.Delete(alert);
+
+        return NoContent();
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] AlertModel model)
     {

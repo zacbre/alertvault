@@ -13,20 +13,20 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AlertVault.Db.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20251108055325_AddRequest")]
-    partial class AddRequest
+    [Migration("20251111190825_InitialV2")]
+    partial class InitialV2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AlertVault.Core.Alert", b =>
+            modelBuilder.Entity("AlertVault.Core.Entities.Alert", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,12 +43,17 @@ namespace AlertVault.Db.Migrations
                     b.Property<DateTime>("LastCheckUtc")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("LastReported")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Uuid")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("Uuid")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -57,7 +62,7 @@ namespace AlertVault.Db.Migrations
                     b.ToTable("Alert");
                 });
 
-            modelBuilder.Entity("AlertVault.Core.Request", b =>
+            modelBuilder.Entity("AlertVault.Core.Entities.AlertNotification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,12 +73,42 @@ namespace AlertVault.Db.Migrations
                     b.Property<int>("AlertId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlertId");
+
+                    b.ToTable("AlertNotifications");
+                });
+
+            modelBuilder.Entity("AlertVault.Core.Entities.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AlertId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<IPAddress>("IpAddress")
                         .IsRequired()
                         .HasColumnType("inet");
 
                     b.Property<int>("Method")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserAgent")
                         .IsRequired()
@@ -86,7 +121,7 @@ namespace AlertVault.Db.Migrations
                     b.ToTable("Request");
                 });
 
-            modelBuilder.Entity("AlertVault.Core.User", b =>
+            modelBuilder.Entity("AlertVault.Core.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,14 +140,17 @@ namespace AlertVault.Db.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("UpdatedUtc")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("AlertVault.Core.Alert", b =>
+            modelBuilder.Entity("AlertVault.Core.Entities.Alert", b =>
                 {
-                    b.HasOne("AlertVault.Core.User", "User")
+                    b.HasOne("AlertVault.Core.Entities.User", "User")
                         .WithMany("Alerts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -121,9 +159,9 @@ namespace AlertVault.Db.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AlertVault.Core.Request", b =>
+            modelBuilder.Entity("AlertVault.Core.Entities.AlertNotification", b =>
                 {
-                    b.HasOne("AlertVault.Core.Alert", "Alert")
+                    b.HasOne("AlertVault.Core.Entities.Alert", "Alert")
                         .WithMany()
                         .HasForeignKey("AlertId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -132,7 +170,23 @@ namespace AlertVault.Db.Migrations
                     b.Navigation("Alert");
                 });
 
-            modelBuilder.Entity("AlertVault.Core.User", b =>
+            modelBuilder.Entity("AlertVault.Core.Entities.Request", b =>
+                {
+                    b.HasOne("AlertVault.Core.Entities.Alert", "Alert")
+                        .WithMany("Requests")
+                        .HasForeignKey("AlertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Alert");
+                });
+
+            modelBuilder.Entity("AlertVault.Core.Entities.Alert", b =>
+                {
+                    b.Navigation("Requests");
+                });
+
+            modelBuilder.Entity("AlertVault.Core.Entities.User", b =>
                 {
                     b.Navigation("Alerts");
                 });

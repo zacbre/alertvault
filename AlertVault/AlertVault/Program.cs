@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using System.Text.Json.Serialization;
 using AlertVault.Core.Configuration;
 using AlertVault.Core.Jobs;
@@ -66,11 +67,12 @@ builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
     .UseSimpleAssemblyNameTypeSerializer()
     .UseRecommendedSerializerSettings()
-    .UseRedisStorage(config.Redis.ToString()));
+    .UseRedisStorage(Redis));
+
 builder.Services.AddHangfireServer();
 
-builder.Services.AddTransient<IJobInstance, FindExpiredAlertsJob>();
-builder.Services.AddTransient<IJobInstance, NotifyExpiredAlertJob>();
+builder.Services.AddTransient<FindExpiredAlertsJob>();
+builder.Services.AddTransient<NotifyExpiredAlertJob>();
 
 var app = builder.Build();
 
@@ -87,7 +89,15 @@ app.UseCors(myAllowSpecificOrigins);
 
 app.UseHangfireDashboard();
 
-RecurringJob.AddOrUpdate<IJobInstance>("ijob-instances", x => x.Execute(), Cron.Minutely);
+RecurringJob.AddOrUpdate<FindExpiredAlertsJob>(
+    nameof(FindExpiredAlertsJob), 
+    x => x.Execute(), 
+    Cron.Minutely);
+
+RecurringJob.AddOrUpdate<NotifyExpiredAlertJob>(
+    nameof(NotifyExpiredAlertJob), 
+    x => x.Execute(), 
+     Cron.Minutely);
 
 app.Run();
 

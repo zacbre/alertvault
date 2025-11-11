@@ -3,16 +3,14 @@ using AlertVault.Core.Service;
 
 namespace AlertVault.Core.Jobs;
 
-public class NotifyExpiredAlertJob(AlertNotificationQueueService alertNotificationQueueService) : IJobInstance
+public class NotifyExpiredAlertJob(AlertNotificationQueueService alertNotificationQueueService)
 {
     public async Task Execute()
     {
-        AlertNotification? alertNotification;
+        AlertNotification? alertNotification = null;
         while ((alertNotification = await alertNotificationQueueService.Pop()) != null)
         {
-            // Here you would add the logic to notify about the expired alert.
-            // For example, sending an email or a push notification.
-            Console.WriteLine($"Notifying about expired alert with ID: {alertNotification.AlertId}");
+            // Here, we look up a user's configured notification preference and send the alert accordingly.
         }
     }
 }

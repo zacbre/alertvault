@@ -45,6 +45,7 @@ public class AlertService(IAlertRepository alertRepository, IAlertNotificationQu
         }
 
         alert.LastCheckUtc = DateTime.UtcNow;
+        alert.LastReported = null;
         await alertRepository.Save();
         
         return alert;
@@ -61,5 +62,11 @@ public class AlertService(IAlertRepository alertRepository, IAlertNotificationQu
         return alert.Requests;
     }
     
+    public void Delete(Alert alert)
+    {
+        alertRepository.Delete(alert);
+    }
+    
     public async Task Save() => await alertRepository.Save();
+
 }

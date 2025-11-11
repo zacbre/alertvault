@@ -8,7 +8,7 @@ public class AlertNotificationQueueRepository(DatabaseContext context) : BaseRep
 {
     public async Task<AlertNotification?> Next()
     {
-        var alertNotification = await context.AlertNotifications.Take(1).FirstOrDefaultAsync();
+        var alertNotification = await context.AlertNotifications.OrderBy(an => an.Id).Take(1).FirstOrDefaultAsync();
         if (alertNotification is null) return alertNotification;
         
         context.AlertNotifications.Remove(alertNotification);

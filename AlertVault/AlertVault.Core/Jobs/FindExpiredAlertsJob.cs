@@ -3,7 +3,7 @@ using AlertVault.Core.Service;
 
 namespace AlertVault.Core.Jobs;
 
-public class FindExpiredAlertsJob(AlertService alertService, AlertNotificationQueueService alertNotificationQueueService) : IJobInstance
+public class FindExpiredAlertsJob(AlertService alertService, AlertNotificationQueueService alertNotificationQueueService)
 {
     public async Task Execute()
     {

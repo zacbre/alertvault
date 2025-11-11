@@ -9,5 +9,7 @@ public interface IAlertRepository
     Task<Alert?> Get(Guid uuid);
     Task<List<Request>> GetRequests(Guid uuid);
     Task Add(Alert alert);
+    Task Delete(Alert alert);
     Task Save();
+    
 }
