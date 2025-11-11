@@ -55,6 +55,10 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[12.1.0, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.22, )"
             }
           },
           "imports": [
@@ -210,6 +214,14 @@
             "CustomEnvironmentConfig": {
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.22, )"
+            },
+            "Hangfire.Redis.StackExchange": {
+              "target": "Package",
+              "version": "[1.12.0, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",

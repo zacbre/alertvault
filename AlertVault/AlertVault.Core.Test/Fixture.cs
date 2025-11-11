@@ -21,7 +21,7 @@ public class Fixture : IDisposable
         _messageSink = messageSink;
         
         RunBatchFile("docker-compose", "down -v");
-        RunBatchFile("docker-compose", "up -d test-db");
+        RunBatchFile("docker-compose", "up -d test-db redis");
         
         Configuration = ConfigurationParser.Parse<Configuration.Configuration>(fileName: "local.env");
         
@@ -58,6 +58,7 @@ public class Fixture : IDisposable
     public DatabaseContext Context => _context;
     public UserRepository UserRepository => new(Context);
     public AlertRepository AlertRepository => new(Context);
+    public AlertNotificationQueueRepository AlertNotificationQueueRepository => new(Context);
 
     public void Dispose()
     {

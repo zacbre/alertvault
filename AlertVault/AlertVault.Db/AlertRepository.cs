@@ -5,9 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AlertVault.Db;
 
-public class AlertRepository(DatabaseContext context) : IAlertRepository
+public class AlertRepository(DatabaseContext context) : BaseRepository(context), IAlertRepository
 {
     public async Task<List<Alert>> All() => await context.Alert.ToListAsync();
+
+    public async Task<List<Alert>> AllExpired()
+    {
+        var query = (from a in context.Alert
+            where a.LastCheckUtc + a.Interval < DateTime.UtcNow &&
+                  a.LastReported == null
+            select a);
+        
+        return await query.ToListAsync();
+    }
 
     public async Task<Alert?> Get(Guid uuid) =>
         await (from alert in context.Alert
@@ -22,12 +32,7 @@ public class AlertRepository(DatabaseContext context) : IAlertRepository
     public async Task Add(Alert alert)
     {
         var addedAlert = await context.Alert.AddAsync(alert);
-        await Update();
+        await Save();
         alert.Id = addedAlert.Entity.Id;
-    }
-
-    public async Task Update()
-    {
-        await context.SaveChangesAsync();
     }
 }

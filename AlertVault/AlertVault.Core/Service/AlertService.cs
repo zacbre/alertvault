@@ -5,9 +5,11 @@ using FluentValidation;
 
 namespace AlertVault.Core.Service;
 
-public class AlertService(IAlertRepository alertRepository, IValidator<Alert> validator)
+public class AlertService(IAlertRepository alertRepository, IAlertNotificationQueueRepository alertNotificationQueueRepository, IValidator<Alert> validator)
 {
     public async Task<List<Alert>> All() => await alertRepository.All();
+    
+    public async Task<List<Alert>> AllExpired() => await alertRepository.AllExpired();
     
     public async Task<Alert?> Get(Guid uuid) => await alertRepository.Get(uuid);
     
@@ -43,7 +45,7 @@ public class AlertService(IAlertRepository alertRepository, IValidator<Alert> va
         }
 
         alert.LastCheckUtc = DateTime.UtcNow;
-        await alertRepository.Update();
+        await alertRepository.Save();
         
         return alert;
     }
@@ -58,4 +60,6 @@ public class AlertService(IAlertRepository alertRepository, IValidator<Alert> va
 
         return alert.Requests;
     }
+    
+    public async Task Save() => await alertRepository.Save();
 }

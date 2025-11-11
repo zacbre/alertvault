@@ -30,6 +30,10 @@ services:
     volumes:
       - test-postgres:/var/lib/postgresql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  redis:
+    image: redis:latest
+    ports:
+      - "6381:6379"
 
 volumes:
   test-postgres:

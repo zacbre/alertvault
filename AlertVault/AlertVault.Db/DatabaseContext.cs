@@ -22,13 +22,13 @@ public class DatabaseContext : DbContext
         }
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
         UpdateEntity();
         return base.SaveChangesAsync(cancellationToken);
     }
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new())
     {
         UpdateEntity();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
@@ -47,6 +47,7 @@ public class DatabaseContext : DbContext
     }
 
     public DbSet<Alert> Alert { get; init; }
+    public DbSet<AlertNotification> AlertNotifications { get; init; }
     public DbSet<User> User { get; init; }
 
     public DbSet<Request> Request { get; init; }

@@ -7,5 +7,6 @@ public class Alert : BaseEntity
     public Guid Uuid { get; set; } = Guid.NewGuid();
     public DateTime LastCheckUtc { get; set; }
     public TimeSpan Interval { get; set; }
+    public DateTime? LastReported { get; set; }
     public List<Request> Requests { get; set; } = [];
 }

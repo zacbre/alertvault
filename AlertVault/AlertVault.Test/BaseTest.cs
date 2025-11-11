@@ -11,10 +11,11 @@ public abstract class BaseTest(Fixture fixture) : IClassFixture<CustomWebApplica
 {
     public UserRepository UserRepository => fixture.UserRepository;
     public AlertRepository AlertRepository => fixture.AlertRepository;
+    public AlertNotificationQueueRepository AlertNotificationQueueRepository => fixture.AlertNotificationQueueRepository;
     public DatabaseContext DatabaseContext => fixture.Context;
     
-    public UserService UserService => new UserService(UserRepository);
-    public AlertService AlertService => new AlertService(AlertRepository, new AlertValidator());
+    public UserService UserService => new(UserRepository);
+    public AlertService AlertService => new(AlertRepository, AlertNotificationQueueRepository, new AlertValidator());
     
     internal async Task<User> CreateUser() => await UserService.Add(new User{ Email = "test@test.com", Password = "1234"}); 
     

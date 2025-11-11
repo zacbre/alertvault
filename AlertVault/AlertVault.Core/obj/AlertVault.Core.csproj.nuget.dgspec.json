@@ -55,6 +55,10 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[12.1.0, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.22, )"
             }
           },
           "imports": [

@@ -21,9 +21,9 @@ public class Result
         Error = string.Join(", ", errors);
     }
 
-    public static Result Success() => new Result(true, (string?)null);
-    public static Result Failure(string? error) => new Result(false, error);
-    public static Result Failure(List<string> errors) => new Result(false, errors);
+    public static Result Success() => new(true, (string?)null);
+    public static Result Failure(string? error) => new(false, error);
+    public static Result Failure(List<string> errors) => new(false, errors);
 }
 
 public class Result<T> : Result
@@ -42,9 +42,9 @@ public class Result<T> : Result
         base.Error = string.Join(", ", errors);
     }
 
-    public static Result<T?> Success(T? value) => new Result<T?>(value, true, (string?)null);
-    public new static Result<T?> Failure(string error) => new Result<T?>(default, false, error);
-    public new static Result<T?> Failure(List<string> errors) => new Result<T?>(default, false, errors);
+    public static Result<T?> Success(T? value) => new(value, true, (string?)null);
+    public new static Result<T?> Failure(string error) => new(default, false, error);
+    public new static Result<T?> Failure(List<string> errors) => new(default, false, errors);
     
     public static implicit operator Result<T?>(T? value) => Success(value);
 

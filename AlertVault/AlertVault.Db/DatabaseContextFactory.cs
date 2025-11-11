@@ -11,10 +11,8 @@ public class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContex
     {
         var config = ConfigurationParser.Parse<Configuration>(fileName: "local.env");
         
-        var connectionString = $"Host={config.Postgres.Host};Port={config.Postgres.Port};Database={config.Postgres.Database};Username={config.Postgres.User};Password={config.Postgres.Password}";
-        
         var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-        optionsBuilder.UseNpgsql(connectionString);
+        optionsBuilder.UseNpgsql(config.Postgres.ToString());
 
         return new DatabaseContext(optionsBuilder.Options);
     }
