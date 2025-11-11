@@ -37,9 +37,9 @@ public class Result<T> : Result
     
     protected Result(T? value, bool isSuccess, List<string> errors) : base(isSuccess, errors)
     {
-        base.IsSuccess = isSuccess;
-        base.Errors = errors;
-        base.Error = string.Join(", ", errors);
+        IsSuccess = isSuccess;
+        Errors = errors;
+        Error = string.Join(", ", errors);
     }
 
     public static Result<T?> Success(T? value) => new(value, true, (string?)null);

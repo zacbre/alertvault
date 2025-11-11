@@ -15,6 +15,13 @@ public class Fixture : IDisposable
     private readonly DatabaseContext _context;
 
     public Configuration.Configuration Configuration { get; }
+    
+    public DatabaseContext Context => _context;
+    
+    public AlertRepository AlertRepository => new(Context);
+    public AlertNotificationQueueRepository AlertNotificationQueueRepository => new(Context);
+    public UserCredentialsRepository UserCredentialsRepository => new(Context);
+    public UserRepository UserRepository => new(Context);
 
     public Fixture(IMessageSink messageSink)
     {
@@ -55,11 +62,6 @@ public class Fixture : IDisposable
         command.ExecuteNonQuery();
     }
 
-    public DatabaseContext Context => _context;
-    public UserRepository UserRepository => new(Context);
-    public AlertRepository AlertRepository => new(Context);
-    public AlertNotificationQueueRepository AlertNotificationQueueRepository => new(Context);
-
     public void Dispose()
     {
         _context.Dispose();
@@ -91,7 +93,7 @@ public class Fixture : IDisposable
     {
         OutputMessage($"Running: {command} {argument}");
 
-        var result = CliWrap.Cli
+        var result = Cli
             .Wrap(command)
             .WithArguments(argument)                
             .WithStandardOutputPipe(PipeTarget.ToDelegate(OutputMessage))

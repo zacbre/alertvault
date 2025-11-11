@@ -91,7 +91,7 @@ public class Fixture : IDisposable
     {
         OutputMessage($"Running: {command} {argument}");
 
-        var result = CliWrap.Cli
+        var result = Cli
             .Wrap(command)
             .WithArguments(argument)                
             .WithStandardOutputPipe(PipeTarget.ToDelegate(OutputMessage))

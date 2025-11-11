@@ -16,10 +16,10 @@ public class UserCredentials : BaseEntity
 
 public class CredentialHelper
 {
-    public DiscordCredentials? Discord { get; set; }
+    public DiscordWebhookCredentials? DiscordWebhook { get; set; }
 }
 
-public class DiscordCredentials
+public class DiscordWebhookCredentials
 {
-    public string WebhookUrl { get; set; }
+    public string Url { get; set; }
 }

@@ -1,6 +1,8 @@
+using System.Text.Json;
 using AlertVault.Core.Entities;
 using AlertVault.Core.Entities.Dto;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlertVault.Core.Infrastructure.Database;
 
@@ -25,6 +27,10 @@ public class DatabaseContext : DbContext
             .HasConversion(
                 v => v.ToString(),
                 v => (UserCredentialTypeEnum)Enum.Parse(typeof(UserCredentialTypeEnum), v));
+
+        modelBuilder
+            .Entity<UserCredentials>()
+            .ComplexProperty(p => p.Credentials, d => d.ToJson());
     }
 
     private void UpdateEntity()

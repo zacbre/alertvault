@@ -48,14 +48,16 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseNpgsql(config.Postgres.ToString()));
 
 // repositories
-builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<AlertRepository>();
 builder.Services.AddScoped<AlertNotificationQueueRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserCredentialsRepository>();
 
 // serivces
-builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<AlertService>();
 builder.Services.AddTransient<AlertNotificationQueueService>();
+builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<UserCredentialsService>();
 
 // Validators
 builder.Services.AddValidatorsFromAssemblyContaining<AlertValidator>();

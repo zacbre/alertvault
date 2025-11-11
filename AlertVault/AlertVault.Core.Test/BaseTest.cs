@@ -7,13 +7,19 @@ namespace AlertVault.Core.Test;
 
 public class BaseTest(Fixture fixture)
 {
-    public UserRepository UserRepository => fixture.UserRepository;
-    public AlertRepository AlertRepository => fixture.AlertRepository;
-    public AlertNotificationQueueRepository AlertNotificationQueueRepository => fixture.AlertNotificationQueueRepository;
     public DatabaseContext DatabaseContext => fixture.Context;
     
-    public UserService UserService => new(UserRepository);
+    // Repositories
+    public AlertRepository AlertRepository => fixture.AlertRepository;
+    public AlertNotificationQueueRepository AlertNotificationQueueRepository => fixture.AlertNotificationQueueRepository;
+    public UserCredentialsRepository UserCredentialsRepository => fixture.UserCredentialsRepository;
+    public UserRepository UserRepository => fixture.UserRepository;
+    
+    // Services 
     public AlertService AlertService => new(AlertRepository, AlertNotificationQueueRepository, new AlertValidator());
+    public AlertNotificationQueueService AlertNotificationQueueService => new(AlertNotificationQueueRepository);
+    public UserCredentialsService UserCredentialsService => new (UserCredentialsRepository);
+    public UserService UserService => new(UserRepository);
     
     internal async Task<User> CreateUser() => await UserService.Add(new User{ Email = "test@test.com", Password = "1234"}); 
     

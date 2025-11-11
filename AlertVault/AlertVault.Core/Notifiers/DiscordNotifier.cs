@@ -6,11 +6,11 @@ namespace AlertVault.Core.Notifiers;
 
 public class DiscordNotifier(HttpClient client) : IAlertNotifier
 {
-    public UserCredentialTypeEnum CredentialType => UserCredentialTypeEnum.Discord;
+    public UserCredentialTypeEnum CredentialType => UserCredentialTypeEnum.DiscordWebhook;
     
     public async Task Notify(UserCredentials credentials, Alert alert)
     {
-        var discordCredentials = credentials.Credentials.Discord;
+        var discordCredentials = credentials.Credentials.DiscordWebhook;
         if (discordCredentials == null)
         {
             throw new InvalidOperationException("Discord credentials are missing.");
@@ -22,6 +22,6 @@ public class DiscordNotifier(HttpClient client) : IAlertNotifier
             Content = $"Alert Triggered: {alert.Name}\nDescription: {alert.Description}"
         };
         
-        await client.PostAsJsonAsync(discordCredentials.WebhookUrl, discordModel);
+        await client.PostAsJsonAsync(discordCredentials.Url, discordModel);
     }
 }

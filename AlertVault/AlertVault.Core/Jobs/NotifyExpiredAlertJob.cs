@@ -10,7 +10,7 @@ public class NotifyExpiredAlertJob(AlertNotificationQueueService alertNotificati
         AlertNotification? alertNotification = null;
         while ((alertNotification = await alertNotificationQueueService.Pop()) != null)
         {
-            // Here, we look up a user's configured notification preference and send the alert accordingly.
+            // Get the alert notification details
         }
     }
 }

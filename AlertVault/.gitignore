@@ -1,0 +1,14 @@
+# .NET Core
+bin/
+obj/
+*.dll
+*.pdb
+
+# Environment files
+*.env
+appsettings.*.json
+
+# Visual Studio / Rider files
+*.user
+*.suo
+*.cache
