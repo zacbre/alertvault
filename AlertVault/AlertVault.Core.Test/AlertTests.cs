@@ -9,7 +9,11 @@ public class AlertTests(Fixture fixture) : BaseTest(fixture)
     public async Task Can_Make_Alert()
     {
         var user = await CreateUser();
-        var alert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+        var pulledAlert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+        Assert.True(pulledAlert.IsSuccess);
+        Assert.NotNull(pulledAlert.Value);
+
+        var alert = pulledAlert.Value;
 
         var gottenAlert = await AlertService.Get(alert.Uuid);
         Assert.NotNull(gottenAlert);
@@ -23,7 +27,11 @@ public class AlertTests(Fixture fixture) : BaseTest(fixture)
     public async Task Can_Update_LastChecked()
     {
         var user = await CreateUser();
-        var alert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+        var addedAlert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+        Assert.True(addedAlert.IsSuccess);
+        Assert.NotNull(addedAlert.Value);
+        var alert = addedAlert.Value;
+        
         var originalDateTime = alert.LastCheckUtc;
         // Delay to ensure LastCheckUtc will be different
         await Task.Delay(1000);

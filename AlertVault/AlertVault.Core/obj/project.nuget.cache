@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "EmRu1NO8K6Y=",
+  "dgSpecHash": "Wriv0TFEr5A=",
   "success": true,
   "projectFilePath": "/Users/zac/gh/alertvault/AlertVault/AlertVault.Core/AlertVault.Core.csproj",
   "expectedPackageFiles": [
     "/Users/zac/.nuget/packages/customenvironmentconfig/8.0.1/customenvironmentconfig.8.0.1.nupkg.sha512",
+    "/Users/zac/.nuget/packages/fluentvalidation/12.1.0/fluentvalidation.12.1.0.nupkg.sha512",
+    "/Users/zac/.nuget/packages/fluentvalidation.aspnetcore/11.3.1/fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "/Users/zac/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.0/fluentvalidation.dependencyinjectionextensions.12.1.0.nupkg.sha512",
     "/Users/zac/.nuget/packages/microsoft.aspnetcore.hosting.abstractions/2.2.0/microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",
     "/Users/zac/.nuget/packages/microsoft.aspnetcore.hosting.server.abstractions/2.2.0/microsoft.aspnetcore.hosting.server.abstractions.2.2.0.nupkg.sha512",
     "/Users/zac/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

@@ -2,8 +2,11 @@ using System.Text.Json.Serialization;
 using AlertVault.Core.Configuration;
 using AlertVault.Core.Repository;
 using AlertVault.Core.Service;
+using AlertVault.Core.Validators;
 using AlertVault.Db;
+using AlertVault.Filters;
 using CustomEnvironmentConfig;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,10 +27,17 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton(config);
 builder.Services.AddOpenApi();
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
+
+builder
+    .Services
+    .AddControllers(options =>
+    {
+        options.Filters.Add<ResultFilter>();
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 // build connection string.
 var connectionString = $"Host={config.Postgres.Host};Port={config.Postgres.Port};Database={config.Postgres.Database};Username={config.Postgres.User};Password={config.Postgres.Password}";
 builder.Services.AddDbContext<DatabaseContext>(options =>
@@ -40,6 +50,9 @@ builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 // serivces
 builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<AlertService>();
+
+// Validators
+builder.Services.AddValidatorsFromAssemblyContaining<AlertValidator>();
 
 var app = builder.Build();
 

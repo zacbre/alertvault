@@ -5,5 +5,5 @@ public class User : BaseEntity
     public required string Email { get; set; }
     public required string Password { get; set; }
 
-    public List<Alert> Alerts { get; set; } = new();
+    public List<Alert> Alerts { get; set; } = [];
 }

@@ -7,7 +7,12 @@ public class DatabaseTests(Fixture fixture) : BaseTest(fixture)
     public async Task Database_Can_Update_Updated_Utc()
     {
         var user = await CreateUser();
-        var alert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+        var addedAlert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+        Assert.True(addedAlert.IsSuccess);
+        Assert.NotNull(addedAlert.Value);
+        
+        var alert = addedAlert.Value;
+        
         var originalDateTime = alert.UpdatedUtc;
 
         var firstAlert = await AlertService.Get(alert.Uuid);

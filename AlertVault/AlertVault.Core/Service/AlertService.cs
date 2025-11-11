@@ -1,15 +1,17 @@
+using AlertVault.Core.Dto;
 using AlertVault.Core.Entities;
 using AlertVault.Core.Repository;
+using FluentValidation;
 
 namespace AlertVault.Core.Service;
 
-public class AlertService(IAlertRepository alertRepository)
+public class AlertService(IAlertRepository alertRepository, IValidator<Alert> validator)
 {
     public async Task<List<Alert>> All() => await alertRepository.All();
     
     public async Task<Alert?> Get(Guid uuid) => await alertRepository.Get(uuid);
     
-    public async Task<Alert> Add(int userId, TimeSpan interval)
+    public async Task<Result<Alert?>> Add(int userId, TimeSpan interval)
     {
         var alert = new Alert
         {
@@ -19,6 +21,13 @@ public class AlertService(IAlertRepository alertRepository)
             Interval = interval,
             LastCheckUtc = DateTime.UtcNow
         };
+
+        var validationResult = await validator.ValidateAsync(alert);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return Result<Alert?>.Failure(errors);
+        }
 
         await alertRepository.Add(alert);
 

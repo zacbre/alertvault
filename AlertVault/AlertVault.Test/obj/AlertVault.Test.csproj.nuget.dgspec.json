@@ -47,6 +47,14 @@
             "CustomEnvironmentConfig": {
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.3.1, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.1.0, )"
             }
           },
           "imports": [
