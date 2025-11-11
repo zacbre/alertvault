@@ -1,4 +1,5 @@
 using AlertVault.Core;
+using AlertVault.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlertVault.Db;

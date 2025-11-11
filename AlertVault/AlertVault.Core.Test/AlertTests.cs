@@ -9,13 +9,34 @@ public class AlertTests(Fixture fixture) : BaseTest(fixture)
     public async Task Can_Make_Alert()
     {
         var user = await CreateUser();
-        var alert = await AlertService.Add(TimeSpan.FromMinutes(5));
+        var alert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+
+        var gottenAlert = await AlertService.Get(alert.Uuid);
+        Assert.NotNull(gottenAlert);
+        Assert.Equal(alert.Id, gottenAlert.Id);
+        Assert.Equal(alert.Interval, gottenAlert.Interval);
+        Assert.Equal(alert.Uuid, gottenAlert.Uuid);
+        Assert.Equal(alert.UserId, gottenAlert.UserId);
+    }
+
+    [Fact]
+    public async Task Can_Update_LastChecked()
+    {
+        var user = await CreateUser();
+        var alert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
+
+        var firstAlert = await AlertService.Get(alert.Uuid);
+        Assert.NotNull(firstAlert);
+        Assert.Equal(alert.Id, firstAlert.Id);
+        Assert.Equal(alert.Interval, firstAlert.Interval);
+        Assert.Equal(alert.Uuid, firstAlert.Uuid);
+        Assert.Equal(alert.UserId, firstAlert.UserId);
+
+        DatabaseContext.Alert.Update(alert);
+        await DatabaseContext.SaveChangesAsync();
         
-        var alerts = await AlertService.All();
-        Assert.Single(alerts);
-        Assert.Equal(alert.Id, alerts[0].Id);
-        Assert.Equal(alert.Interval, alerts[0].Interval);
-        Assert.Equal(alert.Uuid, alerts[0].Uuid);
-        Assert.Equal(alert.UserId, alerts[0].UserId);
+        var gottenAlert = await AlertService.Get(alert.Uuid);
+        Assert.NotNull(gottenAlert);
+        Assert.NotEqual(alert.UpdatedUtc, gottenAlert.CreatedUtc);
     }
 }

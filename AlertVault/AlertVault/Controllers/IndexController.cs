@@ -7,8 +7,8 @@ namespace AlertVault.Controllers;
 [Route("/")]
 public class IndexController(AlertService alertService) : ControllerBase
 {
-    [HttpGet("{uuid:minlength(36):maxlength(36)}")]
-    public async Task<IActionResult> Index(string uuid)
+    [HttpGet("{uuid:guid}")]
+    public async Task<IActionResult> Index(Guid uuid)
     {
         var alert = await alertService.UpdateLastChecked(uuid);
         if (alert is null)

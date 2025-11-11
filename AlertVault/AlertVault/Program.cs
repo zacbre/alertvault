@@ -55,3 +55,5 @@ app.UseStaticFiles();
 app.UseCors(myAllowSpecificOrigins);
 
 app.Run();
+
+public partial class Program { }

@@ -1,10 +1,12 @@
 using AlertVault.Core;
 using AlertVault.Core.Entities;
 using AlertVault.Core.Service;
-using AlertVault.Core.Test;
 using AlertVault.Db;
+using Microsoft.AspNetCore.Mvc.Testing;
 
-public class BaseTest(Fixture fixture)
+namespace AlertVault.Test;
+
+public abstract class BaseTest(Fixture fixture) : IClassFixture<CustomWebApplicationFactory>
 {
     public UserRepository UserRepository => fixture.UserRepository;
     public AlertRepository AlertRepository => fixture.AlertRepository;

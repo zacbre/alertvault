@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8Z9xvEhj1hw=",
+  "dgSpecHash": "EmRu1NO8K6Y=",
   "success": true,
   "projectFilePath": "/Users/zac/gh/alertvault/AlertVault/AlertVault.Core/AlertVault.Core.csproj",
   "expectedPackageFiles": [
-    "/Users/zac/.nuget/packages/customenvironmentconfig/8.0.0/customenvironmentconfig.8.0.0.nupkg.sha512",
+    "/Users/zac/.nuget/packages/customenvironmentconfig/8.0.1/customenvironmentconfig.8.0.1.nupkg.sha512",
     "/Users/zac/.nuget/packages/microsoft.aspnetcore.hosting.abstractions/2.2.0/microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",
     "/Users/zac/.nuget/packages/microsoft.aspnetcore.hosting.server.abstractions/2.2.0/microsoft.aspnetcore.hosting.server.abstractions.2.2.0.nupkg.sha512",
     "/Users/zac/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
@@ -19,7 +19,7 @@
     "/Users/zac/.nuget/packages/system.memory/4.5.1/system.memory.4.5.1.nupkg.sha512",
     "/Users/zac/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.1/system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
     "/Users/zac/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
-    "/Users/zac/.nuget/packages/system.text.json/8.0.4/system.text.json.8.0.4.nupkg.sha512"
+    "/Users/zac/.nuget/packages/system.text.json/8.0.5/system.text.json.8.0.5.nupkg.sha512"
   ],
   "logs": []
 }

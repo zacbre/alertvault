@@ -1,4 +1,5 @@
 using AlertVault.Core;
+using AlertVault.Core.Entities;
 using AlertVault.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,12 +9,12 @@ public class AlertRepository(DatabaseContext context) : IAlertRepository
 {
     public async Task<List<Alert>> All() => await context.Alert.ToListAsync();
 
-    public async Task<Alert?> Get(string uuid) =>
+    public async Task<Alert?> Get(Guid uuid) =>
         await (from alert in context.Alert
             where alert.Uuid == uuid
             select alert).FirstOrDefaultAsync();
 
-    public Task<List<Request>> GetRequests(string uuid)
+    public Task<List<Request>> GetRequests(Guid uuid)
     {
         return Task.FromResult(new List<Request>());
     }

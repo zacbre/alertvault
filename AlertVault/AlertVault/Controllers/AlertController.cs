@@ -15,8 +15,8 @@ public class AlertController(AlertService alertService) : ControllerBase
         return Ok(await alertService.All());
     }
     
-    [HttpGet("{uuid:minlength(36):maxlength(36)}")]
-    public async Task<IActionResult> Get(string uuid)
+    [HttpGet("{uuid:guid}")]
+    public async Task<IActionResult> Get(Guid uuid)
     {
         var alert = await alertService.Get(uuid);
         if (alert is null)
@@ -27,22 +27,16 @@ public class AlertController(AlertService alertService) : ControllerBase
         return Ok(alert);
     }
     
-    [HttpGet("{uuid:minlength(36):maxlength(36)}/requests")]
-    public async Task<IActionResult> GetRequests(string uuid)
+    [HttpGet("{uuid:guid}/requests")]
+    public async Task<IActionResult> GetRequests(Guid uuid)
     {
-        var alertRequests = await alertService.GetRequests(uuid);
-        if (alertRequests is null)
-        {
-            return NotFound();
-        }
-        
-        return Ok(alertRequests);
+        return Ok(await alertService.GetRequests(uuid));
     }
     
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] AlertModel alert)
+    public async Task<IActionResult> Create([FromBody] AlertModel model)
     {
-        var addedAlert = await alertService.Add(alert.Interval);
+        var addedAlert = await alertService.Add(model.UserId, model.Interval);
         
         return Ok(addedAlert);
     }

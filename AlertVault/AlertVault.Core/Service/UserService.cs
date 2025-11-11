@@ -1,3 +1,4 @@
+using AlertVault.Core.Entities;
 using AlertVault.Core.Repository;
 
 namespace AlertVault.Core.Service;
