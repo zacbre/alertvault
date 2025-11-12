@@ -1,4 +1,4 @@
-namespace AlertVault.Core.Test;
+namespace AlertVault.Core.Test.Tests;
 
 [Collection("Database")]
 public class AlertTests(Fixture fixture) : BaseTest(fixture)

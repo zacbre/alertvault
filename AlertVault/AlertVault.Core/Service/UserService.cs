@@ -1,5 +1,6 @@
 using AlertVault.Core.Entities;
 using AlertVault.Core.Infrastructure.Database;
+using AlertVault.Core.Infrastructure.Database.Repositories;
 
 namespace AlertVault.Core.Service;
 

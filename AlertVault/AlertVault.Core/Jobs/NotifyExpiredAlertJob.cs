@@ -1,9 +1,10 @@
 using AlertVault.Core.Entities;
+using AlertVault.Core.Notifiers;
 using AlertVault.Core.Service;
 
 namespace AlertVault.Core.Jobs;
 
-public class NotifyExpiredAlertJob(AlertNotificationQueueService alertNotificationQueueService)
+public class NotifyExpiredAlertJob(AlertNotificationQueueService alertNotificationQueueService, IEnumerable<IAlertNotifier> alertNotifiers)
 {
     public async Task Execute()
     {
@@ -11,6 +12,7 @@ public class NotifyExpiredAlertJob(AlertNotificationQueueService alertNotificati
         while ((alertNotification = await alertNotificationQueueService.Pop()) != null)
         {
             // Get the alert notification details
+            
         }
     }
 }

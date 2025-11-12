@@ -21,5 +21,5 @@ public class CredentialHelper
 
 public class DiscordWebhookCredentials
 {
-    public string Url { get; set; }
+    public required string Url { get; set; }
 }

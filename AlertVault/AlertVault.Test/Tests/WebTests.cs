@@ -1,10 +1,9 @@
 using AlertVault.Core.Test;
 
-namespace AlertVault.Test;
+namespace AlertVault.Test.Tests;
 
 [Collection("Database")]
-
-public class WebTests(CustomWebApplicationFactory factory, Fixture fixture) : CustomBaseTest(factory, fixture)
+public class WebTests(CustomWebApplicationFactory factory, Fixture fixture) : CustomBaseTest(fixture)
 {
     [Fact]
     public async Task Can_Request_Index()

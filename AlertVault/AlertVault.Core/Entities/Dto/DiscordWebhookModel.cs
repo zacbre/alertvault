@@ -2,6 +2,6 @@ namespace AlertVault.Core.Entities.Dto;
 
 public class DiscordWebhookModel
 {
-    public string Username { get; set; }
-    public string Content { get; set; }
+    public required string Username { get; set; }
+    public required string Content { get; set; }
 }

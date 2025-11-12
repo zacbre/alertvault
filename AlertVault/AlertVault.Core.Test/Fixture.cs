@@ -1,4 +1,5 @@
 using AlertVault.Core.Infrastructure.Database;
+using AlertVault.Core.Infrastructure.Database.Repositories;
 using CliWrap;
 using CustomEnvironmentConfig;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ public class Fixture : IDisposable
     public AlertNotificationQueueRepository AlertNotificationQueueRepository => new(Context);
     public UserCredentialsRepository UserCredentialsRepository => new(Context);
     public UserRepository UserRepository => new(Context);
+    public UserAgentRepository UserAgentRepository => new(Context);
 
     public Fixture(IMessageSink messageSink)
     {

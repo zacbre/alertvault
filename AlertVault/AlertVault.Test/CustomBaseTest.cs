@@ -2,6 +2,6 @@ using AlertVault.Core.Test;
 
 namespace AlertVault.Test;
 
-public abstract class CustomBaseTest(CustomWebApplicationFactory factory, Fixture fixture) : BaseTest(fixture), IClassFixture<CustomWebApplicationFactory>
+public abstract class CustomBaseTest(Fixture fixture) : BaseTest(fixture), IClassFixture<CustomWebApplicationFactory>
 {
 }

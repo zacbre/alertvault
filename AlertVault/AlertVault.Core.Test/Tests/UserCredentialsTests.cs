@@ -1,7 +1,6 @@
 using AlertVault.Core.Entities;
-using AlertVault.Core.Service;
 
-namespace AlertVault.Core.Test;
+namespace AlertVault.Core.Test.Tests;
 
 [Collection("Database")]
 public class UserCredentialsTests(Fixture fixture) : BaseTest(fixture)

@@ -1,5 +1,6 @@
 using AlertVault.Core.Entities;
 using AlertVault.Core.Infrastructure.Database;
+using AlertVault.Core.Infrastructure.Database.Repositories;
 using AlertVault.Core.Service;
 using AlertVault.Core.Validators;
 
@@ -14,9 +15,10 @@ public class BaseTest(Fixture fixture)
     public AlertNotificationQueueRepository AlertNotificationQueueRepository => fixture.AlertNotificationQueueRepository;
     public UserCredentialsRepository UserCredentialsRepository => fixture.UserCredentialsRepository;
     public UserRepository UserRepository => fixture.UserRepository;
+    public UserAgentRepository UserAgentRepository => fixture.UserAgentRepository;
     
     // Services 
-    public AlertService AlertService => new(AlertRepository, AlertNotificationQueueRepository, new AlertValidator());
+    public AlertService AlertService => new(AlertRepository, AlertNotificationQueueRepository, UserAgentRepository, new AlertValidator());
     public AlertNotificationQueueService AlertNotificationQueueService => new(AlertNotificationQueueRepository);
     public UserCredentialsService UserCredentialsService => new (UserCredentialsRepository);
     public UserService UserService => new(UserRepository);

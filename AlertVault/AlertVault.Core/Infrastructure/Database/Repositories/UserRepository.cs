@@ -1,7 +1,7 @@
 using AlertVault.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlertVault.Core.Infrastructure.Database;
+namespace AlertVault.Core.Infrastructure.Database.Repositories;
 
 public class UserRepository(DatabaseContext context) : BaseRepository(context)
 {

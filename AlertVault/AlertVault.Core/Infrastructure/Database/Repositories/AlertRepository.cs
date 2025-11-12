@@ -1,7 +1,7 @@
 using AlertVault.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlertVault.Core.Infrastructure.Database;
+namespace AlertVault.Core.Infrastructure.Database.Repositories;
 
 public class AlertRepository(DatabaseContext context) : BaseRepository(context)
 {
@@ -30,7 +30,12 @@ public class AlertRepository(DatabaseContext context) : BaseRepository(context)
 
     public Task<List<Request>> GetRequests(Guid uuid)
     {
-        return Task.FromResult(new List<Request>());
+        var query = from alert in context.Alert
+            where alert.Uuid == uuid
+            join request in context.Request on alert.Id equals request.AlertId
+            select request;
+
+        return query.Include(p => p.UserAgent).ToListAsync();
     }
 
     public async Task Add(Alert alert)
@@ -38,6 +43,13 @@ public class AlertRepository(DatabaseContext context) : BaseRepository(context)
         var addedAlert = await context.Alert.AddAsync(alert);
         await Save();
         alert.Id = addedAlert.Entity.Id;
+    }
+    
+    public async Task AddRequest(Request request)
+    {
+        var addedRequest = await context.Request.AddAsync(request);
+        await Save();
+        request.Id = addedRequest.Entity.Id;
     }
 
     public Task Delete(Alert alert)

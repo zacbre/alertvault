@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using AlertVault.Core.Configuration;
+using AlertVault.Core.Entities;
 using AlertVault.Core.Infrastructure.Database;
+using AlertVault.Core.Infrastructure.Database.Repositories;
 using AlertVault.Core.Jobs;
 using AlertVault.Core.Service;
 using AlertVault.Core.Validators;
@@ -52,8 +54,9 @@ builder.Services.AddScoped<AlertRepository>();
 builder.Services.AddScoped<AlertNotificationQueueRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserCredentialsRepository>();
+builder.Services.AddScoped<UserAgentRepository>();
 
-// serivces
+// services
 builder.Services.AddTransient<AlertService>();
 builder.Services.AddTransient<AlertNotificationQueueService>();
 builder.Services.AddTransient<UserService>();

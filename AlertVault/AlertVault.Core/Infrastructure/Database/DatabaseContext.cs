@@ -14,10 +14,11 @@ public class DatabaseContext : DbContext
     }
 
     public DbSet<Alert> Alert { get; init; }
-    public DbSet<AlertNotification> AlertNotifications { get; init; }
+    public DbSet<AlertNotification> AlertNotification { get; init; }
     public DbSet<Request> Request { get; init; }
-    public DbSet<UserCredentials> UserCredentials { get; init; }
+    public DbSet<UserCredentials> UserCredential { get; init; }
     public DbSet<User> User { get; init; }
+    public DbSet<UserAgent> UserAgent { get; init; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,11 +27,18 @@ public class DatabaseContext : DbContext
             .Property(e => e.CredentialType)
             .HasConversion(
                 v => v.ToString(),
-                v => (UserCredentialTypeEnum)Enum.Parse(typeof(UserCredentialTypeEnum), v));
+                v => Enum.Parse<UserCredentialTypeEnum>(v));
 
         modelBuilder
             .Entity<UserCredentials>()
             .ComplexProperty(p => p.Credentials, d => d.ToJson());
+        
+        modelBuilder
+            .Entity<Request>()
+            .Property(e => e.Method)
+            .HasConversion(
+                v => v.ToString(),
+                v => Enum.Parse<RequestMethodTypeEnum>(v));
     }
 
     private void UpdateEntity()
