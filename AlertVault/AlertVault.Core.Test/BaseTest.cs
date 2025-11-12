@@ -21,6 +21,5 @@ public class BaseTest(Fixture fixture)
     public UserCredentialsService UserCredentialsService => new (UserCredentialsRepository);
     public UserService UserService => new(UserRepository);
     
-    internal async Task<User> CreateUser() => await UserService.Add(new User{ Email = "test@test.com", Password = "1234"}); 
-    
+    protected async Task<User> CreateUser() => await UserService.Add(new User{ Email = "test@test.com", Password = "1234"}); 
 }

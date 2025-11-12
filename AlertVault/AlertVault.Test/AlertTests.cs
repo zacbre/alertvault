@@ -1,11 +1,12 @@
 using System.Net.Http.Json;
 using AlertVault.Core.Entities;
+using AlertVault.Core.Test;
 using AlertVault.Models;
 
 namespace AlertVault.Test;
 
 [Collection("Database")]
-public class AlertTests(CustomWebApplicationFactory factory, Fixture fixture) : BaseTest(fixture)
+public class AlertTests(CustomWebApplicationFactory factory, Fixture fixture) : CustomBaseTest(factory, fixture)
 {
     [Fact]
     public async Task Can_Make_Alert()
