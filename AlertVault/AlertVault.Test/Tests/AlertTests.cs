@@ -56,4 +56,49 @@ public class AlertTests(CustomWebApplicationFactory factory, Fixture fixture) : 
         Assert.Equal(RequestMethodTypeEnum.POST, requests[0].Method);
         Assert.Equal("AlertVaultTestAgent/1.0", requests[0].UserAgent?.UserAgentString);
     }
+    
+    [Fact]
+    public async Task Can_Update_LastChecked()
+    {
+        var client = factory.CreateClient();
+        var user = await CreateUser();
+        var alertModel = new AlertModel
+        {
+            Interval = TimeSpan.FromMinutes(5),
+            UserId = user.Id
+        };
+        
+        var response = await client.PostAsJsonAsync("/api/alert", alertModel);
+        response.EnsureSuccessStatusCode();
+        var createdAlert = await response.Content.ReadFromJsonAsync<Alert>();
+        Assert.NotNull(createdAlert);
+        
+        var originalDateTime = createdAlert.LastCheckUtc;
+        // Delay to ensure LastCheckUtc will be different
+        await Task.Delay(1000);
+
+        var updateResponse = await client.PutAsync($"/{createdAlert.Uuid}", null);
+        updateResponse.EnsureSuccessStatusCode();
+        var updatedAlert = await updateResponse.Content.ReadFromJsonAsync<Alert>();
+        Assert.NotNull(updatedAlert);
+        Assert.Equal(createdAlert.Uuid, updatedAlert.Uuid);
+        Assert.NotEqual(originalDateTime, updatedAlert.LastCheckUtc);
+        Assert.True(originalDateTime < updatedAlert.LastCheckUtc);
+    }
+    
+    [Fact]
+    public async Task Cannot_Create_Alert_With_Invalid_Data()
+    {
+        var client = factory.CreateClient();
+        var alertModel = new AlertModel
+        {
+            Interval = TimeSpan.FromMinutes(-5),
+        };
+        
+        var response = await client.PostAsJsonAsync("/api/alert", alertModel);
+        Assert.False(response.IsSuccessStatusCode);
+        var errorResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+        Assert.NotNull(errorResponse);
+        Assert.Contains("Interval must be at least 1 minute.", errorResponse.Errors);
+    }
 }

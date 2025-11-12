@@ -7,6 +7,7 @@ using AlertVault.Core.Jobs;
 using AlertVault.Core.Service;
 using AlertVault.Core.Validators;
 using AlertVault.Filters;
+using AlertVault.Middleware;
 using CustomEnvironmentConfig;
 using FluentValidation;
 using Hangfire;
@@ -91,6 +92,7 @@ app.UseStaticFiles();
 app.UseCors(myAllowSpecificOrigins);
 
 app.UseHangfireDashboard();
+app.UseMiddleware<TokenAuthenticationMiddleware>();
 
 RecurringJob.AddOrUpdate<FindExpiredAlertsJob>(
     nameof(FindExpiredAlertsJob), 

@@ -25,9 +25,10 @@ public class UserCredentialsTests(Fixture fixture) : BaseTest(fixture)
         await UserCredentialsService.Add(credentials);
         var retrievedCredentials = await UserCredentialsService.GetByUserId(user.Id);
         Assert.NotNull(retrievedCredentials);
-        Assert.Equal(user.Id, retrievedCredentials!.UserId);
-        Assert.Equal(Entities.Dto.UserCredentialTypeEnum.DiscordWebhook, retrievedCredentials.CredentialType);
-        Assert.NotNull(retrievedCredentials.Credentials.DiscordWebhook);
-        Assert.Equal("https://discord.com/api/webhooks/your_webhook_url", retrievedCredentials.Credentials.DiscordWebhook!.Url);
+        Assert.Single(retrievedCredentials);
+        Assert.Equal(user.Id, retrievedCredentials[0].UserId);
+        Assert.Equal(Entities.Dto.UserCredentialTypeEnum.DiscordWebhook, retrievedCredentials[0].CredentialType);
+        Assert.NotNull(retrievedCredentials[0].Credentials.DiscordWebhook);
+        Assert.Equal("https://discord.com/api/webhooks/your_webhook_url", retrievedCredentials[0].Credentials.DiscordWebhook!.Url);
     }
 }

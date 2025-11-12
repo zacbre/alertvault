@@ -34,4 +34,19 @@ public class UserRepository(DatabaseContext context) : BaseRepository(context)
         await Save();
         user.Id = addedUser.Entity.Id;
     }
+
+    public async Task AddToken(UserToken token)
+    {
+        var addedToken = await context.UserToken.AddAsync(token);
+        await Save();
+        token.Id = addedToken.Entity.Id;
+    }
+
+    public async Task<UserToken?> GetToken(Guid token)
+    {
+        return await (from userToken in context.UserToken
+                where userToken.Token == token && userToken.ExpiresAt > DateTime.UtcNow
+                select userToken)
+            .FirstOrDefaultAsync();
+    }
 }

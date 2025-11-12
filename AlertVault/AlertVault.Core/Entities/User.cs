@@ -10,5 +10,5 @@ public class User : BaseEntity
     [MaxLength(200)]
     public required string Password { get; set; }
 
-    public ICollection<Alert> Alerts { get; set; } = [];
+    public List<Alert> Alerts { get; set; } = [];
 }

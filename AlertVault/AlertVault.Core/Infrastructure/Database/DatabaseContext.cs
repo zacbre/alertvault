@@ -19,6 +19,7 @@ public class DatabaseContext : DbContext
     public DbSet<UserCredentials> UserCredential { get; init; }
     public DbSet<User> User { get; init; }
     public DbSet<UserAgent> UserAgent { get; init; }
+    public DbSet<UserToken> UserToken { get; init; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +40,10 @@ public class DatabaseContext : DbContext
             .HasConversion(
                 v => v.ToString(),
                 v => Enum.Parse<RequestMethodTypeEnum>(v));
+        
+        modelBuilder
+            .Entity<Alert>()
+            .ComplexProperty(p => p.AlertConfiguration, d => d.ToJson());
     }
 
     private void UpdateEntity()

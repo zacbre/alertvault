@@ -62,4 +62,5 @@ public class DatabaseContext : DbContext
     public DbSet<Request> Request { get; init; }
     public DbSet<UserCredentials> UserCredentials { get; init; } 
     public DbSet<User> User { get; init; }
+    public DbSet<AlertVault.Models.UserToken> UserTokens { get; init; }
 }

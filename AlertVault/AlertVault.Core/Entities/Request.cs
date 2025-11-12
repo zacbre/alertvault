@@ -11,10 +11,10 @@ public class Request : BaseEntity
     public required IPAddress? IpAddress { get; set; }
     
     public int? UserAgentId { get; set; }
-    public UserAgent? UserAgent { get; set; }
     
     [MaxLength(1024)]
     public string? Body { get; set; }
-
-    public Alert? Alert { get; set; }
+    
+    public Alert Alert { get; set; } = null!;
+    public UserAgent? UserAgent { get; set; }
 }

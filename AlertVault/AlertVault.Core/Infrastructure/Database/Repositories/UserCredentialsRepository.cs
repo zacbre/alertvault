@@ -5,12 +5,12 @@ namespace AlertVault.Core.Infrastructure.Database.Repositories;
 
 public class UserCredentialsRepository(DatabaseContext context) : BaseRepository(context)
 {
-    public async Task<UserCredentials?> GetByUserId(int userId)
+    public async Task<List<UserCredentials>> GetByUserId(int userId)
     {
         return await (from credentials in context.UserCredential
                 where credentials.UserId == userId
                 select credentials)
-            .FirstOrDefaultAsync();
+            .ToListAsync();
     }
     
     public async Task Add(UserCredentials userCredentials)

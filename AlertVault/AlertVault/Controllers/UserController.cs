@@ -1,5 +1,6 @@
 using AlertVault.Core.Entities;
 using AlertVault.Core.Service;
+using AlertVault.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlertVault.Controllers;
@@ -13,11 +14,11 @@ public class UserController(UserService userService) : ControllerBase
     {
         return Ok(await userService.All());
     }
-    
-    [HttpGet]
-    public IActionResult Get()
+
+    [HttpGet("me")]
+    public async Task<IActionResult> Me()
     {
-        return Ok("Hello World");
+        return Ok(HttpContext.Items["UserToken"]);
     }
 
     [HttpPost]
@@ -26,5 +27,16 @@ public class UserController(UserService userService) : ControllerBase
         await userService.Add(user);
         
         return Ok(user);
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    {
+        // Get user, log them in.
+        var token = await userService.Login(model.Email, model.Password);
+        if (token is null)
+            return Unauthorized();
+
+        return Ok(new { token });
     }
 }
