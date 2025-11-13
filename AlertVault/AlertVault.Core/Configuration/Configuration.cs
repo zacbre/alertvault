@@ -8,7 +8,7 @@ public class Configuration
     public PostgresConfiguration Postgres { get; set; } = new();
     [ConfigurationItem(Json = true)]
     public string[] Cors { get; set; } = [];
-    public RedisConnection Redis { get; set; }
+    public required RedisConnection Redis { get; set; }
 }
 
 public class RedisConnection

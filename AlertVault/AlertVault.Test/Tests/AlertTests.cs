@@ -31,6 +31,7 @@ public class AlertTests(CustomWebApplicationFactory factory, Fixture fixture) : 
     {
         var client = factory.CreateClient();
         var user = await CreateUser();
+        Assert.NotNull(user);
         var alertModel = new AlertModel
         {
             Interval = TimeSpan.FromMinutes(5),
@@ -62,6 +63,7 @@ public class AlertTests(CustomWebApplicationFactory factory, Fixture fixture) : 
     {
         var client = factory.CreateClient();
         var user = await CreateUser();
+        Assert.NotNull(user);
         var alertModel = new AlertModel
         {
             Interval = TimeSpan.FromMinutes(5),

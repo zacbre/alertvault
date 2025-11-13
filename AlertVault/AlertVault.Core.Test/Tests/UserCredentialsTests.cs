@@ -9,6 +9,7 @@ public class UserCredentialsTests(Fixture fixture) : BaseTest(fixture)
     public async Task Can_Create_User_Credentials()
     {
         var user = await CreateUser();
+        Assert.NotNull(user);
         var credentials = new Entities.UserCredentials
         {
             UserId = user.Id,

@@ -7,6 +7,7 @@ public class AlertTests(Fixture fixture) : BaseTest(fixture)
     public async Task Can_Make_Alert()
     {
         var user = await CreateUser();
+        Assert.NotNull(user);
         var pulledAlert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
         Assert.True(pulledAlert.IsSuccess);
         Assert.NotNull(pulledAlert.Value);
@@ -25,6 +26,7 @@ public class AlertTests(Fixture fixture) : BaseTest(fixture)
     public async Task Can_Update_LastChecked()
     {
         var user = await CreateUser();
+        Assert.NotNull(user);
         var addedAlert = await AlertService.Add(user.Id, TimeSpan.FromMinutes(5));
         Assert.True(addedAlert.IsSuccess);
         Assert.NotNull(addedAlert.Value);

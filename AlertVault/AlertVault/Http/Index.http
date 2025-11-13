@@ -1,0 +1,46 @@
+@AlertVault_HostAddress = http://localhost:5038
+
+GET {{AlertVault_HostAddress}}/
+Accept: text/html
+###
+
+POST {{AlertVault_HostAddress}}/api/alert
+Content-Type: application/json
+
+{
+  "Interval": "0.00:01:00.0000",
+  "UserId": 1
+}
+> {% client.global.set("uuid", response.body.uuid) %}
+###
+
+GET {{AlertVault_HostAddress}}/{{uuid}}
+Accept: application/json
+###
+POST {{AlertVault_HostAddress}}/{{uuid}}
+Content-Type: application/json
+
+{
+  "sample": "body"
+}
+###
+PUT {{AlertVault_HostAddress}}/{{uuid}}
+Content-Type: application/json
+
+{
+  "sample": "body"
+}
+###
+DELETE {{AlertVault_HostAddress}}/{{uuid}}
+###
+PATCH {{AlertVault_HostAddress}}/{{uuid}}
+Content-Type: application/json
+
+{
+  "sample": "body"
+}
+###
+OPTIONS {{AlertVault_HostAddress}}/{{uuid}}
+###
+HEAD {{AlertVault_HostAddress}}/{{uuid}}
+###

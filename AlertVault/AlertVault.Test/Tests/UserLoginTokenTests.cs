@@ -13,9 +13,10 @@ public class UserLoginTokenTests(CustomWebApplicationFactory factory, Fixture fi
     public async Task Login_Returns_Token_And_Saves_To_Db()
     {
         var client = factory.CreateClient();
-        var rawPassword = "1234";
-        var user = await UserService.Add(new User { Email = "test@test.com", Password = BCrypt.Net.BCrypt.HashPassword(rawPassword) });
-        var loginModel = new { email = user.Email, password = rawPassword };
+        var createdUser = await CreateUser();
+        Assert.NotNull(createdUser);
+        var user = createdUser;
+        var loginModel = new { email = user.Email, password = "password" };
         var response = await client.PostAsJsonAsync("/api/user/login", loginModel);
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
@@ -41,9 +42,10 @@ public class UserLoginTokenTests(CustomWebApplicationFactory factory, Fixture fi
     public async Task Token_Authentication_Middleware_Sets_UserId()
     {
         var client = factory.CreateClient();
-        var rawPassword = "1234";
-        var user = await UserService.Add(new User { Email = "test2@test.com", Password = BCrypt.Net.BCrypt.HashPassword(rawPassword) });
-        var loginModel = new { email = user.Email, password = rawPassword };
+        var createdUser = await CreateUser();
+        Assert.NotNull(createdUser);
+        var user = createdUser;
+        var loginModel = new { email = user.Email, password = "password" };
         var loginResponse = await client.PostAsJsonAsync("/api/user/login", loginModel);
         var result = await loginResponse.Content.ReadFromJsonAsync<TokenResponse>();
         Assert.NotNull(result);

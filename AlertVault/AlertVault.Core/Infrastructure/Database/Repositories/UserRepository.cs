@@ -12,18 +12,22 @@ public class UserRepository(DatabaseContext context) : BaseRepository(context)
 
     public async Task<User?> Get(string email)
     {
-        return await (from user in context.User
+        var query = from user in context.User
                 where user.Email == email
-                select user)
+                select user;
+            
+        return await query
             .Include(p => p.Alerts)
             .FirstOrDefaultAsync();
     }
 
     public async Task<User?> Get(int id)
     {
-        return await (from user in context.User
-                where user.Id == id
-                select user)
+        var query = from user in context.User
+            where user.Id == id
+            select user;
+        
+        return await query
             .Include(p => p.Alerts)
             .FirstOrDefaultAsync();
     }
@@ -44,9 +48,28 @@ public class UserRepository(DatabaseContext context) : BaseRepository(context)
 
     public async Task<UserToken?> GetToken(Guid token)
     {
-        return await (from userToken in context.UserToken
+        var query = from userToken in context.UserToken
                 where userToken.Token == token && userToken.ExpiresAt > DateTime.UtcNow
-                select userToken)
-            .FirstOrDefaultAsync();
+                select userToken;
+        
+        return await query.FirstOrDefaultAsync();
+    }
+    
+    public async Task<ResetPasswordRequest?> GetResetPasswordRequest(Guid token)
+    {
+        var query = (from request in context.ResetPasswordRequest
+            where request.Token == token &&
+                  request.ExpiresAt > DateTime.UtcNow &&
+                  !request.IsUsed
+            select request);
+        
+        return await query.FirstOrDefaultAsync();
+    }
+
+    public async Task AddResetPasswordRequest(ResetPasswordRequest resetPasswordRequest)
+    {
+        var addedRequest = await context.ResetPasswordRequest.AddAsync(resetPasswordRequest);
+        await Save();
+        resetPasswordRequest.Id = addedRequest.Entity.Id;
     }
 }

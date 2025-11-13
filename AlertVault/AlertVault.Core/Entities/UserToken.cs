@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace AlertVault.Core.Entities
 {
+    [Index(nameof(Token), IsUnique = true)]
     public class UserToken : BaseEntity
     {
         public int UserId { get; set; }

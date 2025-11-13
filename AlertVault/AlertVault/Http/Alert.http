@@ -21,3 +21,6 @@ Accept: application/json
 ###
 GET {{AlertVault_HostAddress}}/5806b288-4f6a-499c-af5c-2e2f29b59048
 ###
+GET {{AlertVault_HostAddress}}/api/alert/{uuid}/requests
+Accept: application/json
+###

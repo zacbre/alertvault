@@ -60,17 +60,19 @@ public class AlertService(
     
     public async Task<string> AddRequest(int alertId, IPAddress? ipAddress, string? userAgent, string requestBody, string httpMethod)
     {
-        var jobId = BackgroundJob.Enqueue<AlertService>(service => service.AddRequestInternal(alertId, ipAddress, userAgent, requestBody, httpMethod));
+        var ipString = ipAddress?.ToString();
+        var jobId = BackgroundJob.Enqueue<AlertService>(service => service.AddRequestInternal(alertId, ipString, userAgent, requestBody, httpMethod));
         return await Task.FromResult(jobId);
     }
 
-    public async Task AddRequestInternal(int alertId, IPAddress? ipAddress, string? userAgent, string requestBody, string httpMethod)
+    public async Task AddRequestInternal(int alertId, string? ipAddress, string? userAgent, string requestBody, string httpMethod)
     {
+        var parsedIpAddress = ipAddress != null && IPAddress.TryParse(ipAddress, out var ip) ? ip : null;
         // First, locate the user agent.
         var foundUserAgent = userAgent == null ? null : await userAgentRepository.GetByUserAgentString(userAgent) ?? await userAgentRepository.Add(userAgent);
         var request = new Request
         {
-            IpAddress = ipAddress,
+            IpAddress = parsedIpAddress,
             UserAgentId = foundUserAgent?.Id,
             Method = Enum.Parse<RequestMethodTypeEnum>(httpMethod.ToUpperInvariant()),
             AlertId = alertId,

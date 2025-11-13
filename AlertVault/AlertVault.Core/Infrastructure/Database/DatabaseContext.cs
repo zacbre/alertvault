@@ -16,6 +16,7 @@ public class DatabaseContext : DbContext
     public DbSet<Alert> Alert { get; init; }
     public DbSet<AlertNotification> AlertNotification { get; init; }
     public DbSet<Request> Request { get; init; }
+    public DbSet<ResetPasswordRequest> ResetPasswordRequest { get; init; }
     public DbSet<UserCredentials> UserCredential { get; init; }
     public DbSet<User> User { get; init; }
     public DbSet<UserAgent> UserAgent { get; init; }

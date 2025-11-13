@@ -1,4 +1,6 @@
+using System.Runtime.InteropServices;
 using AlertVault.Core.Entities;
+using AlertVault.Core.Entities.Dto;
 using AlertVault.Core.Infrastructure.Database;
 using AlertVault.Core.Infrastructure.Database.Repositories;
 using AlertVault.Core.Service;
@@ -21,7 +23,9 @@ public class BaseTest(Fixture fixture)
     public AlertService AlertService => new(AlertRepository, AlertNotificationQueueRepository, UserAgentRepository, new AlertValidator());
     public AlertNotificationQueueService AlertNotificationQueueService => new(AlertNotificationQueueRepository);
     public UserCredentialsService UserCredentialsService => new (UserCredentialsRepository);
-    public UserService UserService => new(UserRepository);
+    public UserService UserService => new(UserRepository, new UserValidator());
     
-    protected async Task<User> CreateUser() => await UserService.Add(new User{ Email = "test@test.com", Password = "1234"}); 
+    protected async Task<User?> CreateUser() => (await UserService.Add(new User{ Email = RandomEmail, Password = "password"})).Unwrap();
+    
+    private string RandomEmail => $"{Guid.NewGuid()}@test.com";
 }

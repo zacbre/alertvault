@@ -1,5 +1,6 @@
 @AlertVault_HostAddress = http://localhost:5038
 
+### 
 GET {{AlertVault_HostAddress}}/api/user/all
 Accept: application/json
 
@@ -15,3 +16,21 @@ Content-Type: application/json
 
 ###
 
+GET {{AlertVault_HostAddress}}/api/user/me
+Accept: application/json
+Authorization: Bearer {{token}}
+###
+
+POST {{AlertVault_HostAddress}}/api/user/login
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "password"
+}
+
+> {% client.global.set("token", response.body.token) %}
+
+###
+
+GET {{AlertVault_HostAddress}}
